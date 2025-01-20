@@ -12,7 +12,7 @@ class WebScraper:
         try:
             print(f"Mengambil halaman: {url}")
             response = self.session.get(url)
-            response.raise_for_status()  # Raise error jika status bukan 200
+            response.raise_for_status()
             return response.text
         except requests.RequestException as e:
             print(f"Error saat mengambil halaman: {e}")
@@ -46,15 +46,8 @@ class WebScraper:
 
 if __name__ == "__main__":
     base_url = input("Masukkan URL: ")
-
     scraper = WebScraper(base_url)
-
     page_content = scraper.fetch_page()
-    if page_content:
-        quotes = scraper.parse_html(page_content, "span", "text")
-        for idx, quote in enumerate(quotes, start=1):
-            print(f"Kutipan {idx}: {quote.text}")
-
     links = scraper.extract_links(page_content)
     print("\nTautan yang ditemukan:")
     for link in links:
